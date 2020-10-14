@@ -40,6 +40,20 @@ router.get('/:bookId', async (req, res) => {
     }
 })
 
+//UPDATE
+router.patch('/:bookId', async (req, res) => {
+    try{
+        const payload = req.body;
+        const updatedBook = await Books.updateOne(
+            {_id: req.params.bookId},
+            {...payload}
+        );
+        res.json(updatedBook)
+    } catch(err){
+        res.json({message: err});
+    }
+})
+
 //DELETE SPECIFIC POST
 router.delete('/:bookId', async (req, res) => {
     try{
@@ -49,4 +63,5 @@ router.delete('/:bookId', async (req, res) => {
         res.json({message: err});
     }
 })
+
 module.exports = router;
