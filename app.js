@@ -6,7 +6,9 @@ const bodyParser = require('body-parser');
 require('dotenv/config')
 
 app.use(bodyParser.json());
+
 //IMPORT ROUTES
+
 const postsRoute = require('./routes/posts');
 
 app.use('/posts', postsRoute);
