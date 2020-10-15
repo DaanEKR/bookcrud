@@ -6,7 +6,7 @@ const Books = require('../models/Books');
 router.get('/', async (req, res) => {
     try {
         const books = await Books.find();
-        res.json(books);
+        res.json("All books");
     } catch(err){
         res.json({message:err});
     }
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 
     books.save()
     .then(data => {
-        res.json(data);
+        res.json("Book has been added successfully");
     })
     .catch(err => {
         res.json({message: err});
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
 router.get('/:bookId', async (req, res) => {
     try{
         const book = await Books.findById(req.params.bookId);
-        res.json(book)
+        res.json("Get specific book")
     } catch(err){
         res.json({message: err});
     }
@@ -48,7 +48,7 @@ router.patch('/:bookId', async (req, res) => {
             {_id: req.params.bookId},
             {...payload}
         );
-        res.json(updatedBook)
+        res.json("Book had been updated")
     } catch(err){
         res.json({message: err});
     }
@@ -58,7 +58,7 @@ router.patch('/:bookId', async (req, res) => {
 router.delete('/:bookId', async (req, res) => {
     try{
         const removedBook = await Books.remove({_id: req.params.bookId})
-        res.json(removedBook)
+        res.json("Book had been deleted successfully")
     } catch(err){
         res.json({message: err});
     }
