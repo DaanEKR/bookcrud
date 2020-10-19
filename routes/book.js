@@ -6,7 +6,7 @@ const Books = require('../models/Books');
 router.get('/', async (req, res) => {
     try {
         const books = await Books.find();
-        res.json("All books");
+        res.json(books);
     } catch(err){
         res.json({message:err});
     }
@@ -22,7 +22,10 @@ router.post('/', (req, res) => {
 
     books.save()
     .then(data => {
-        res.json("Book has been added successfully");
+        res.json({
+            message: "Book has been added successfully",
+            added: true
+        });
     })
     .catch(err => {
         res.json({message: err});
@@ -30,11 +33,12 @@ router.post('/', (req, res) => {
 });
 
 //SPECIFIC POST
-
 router.get('/:bookId', async (req, res) => {
     try{
-        const book = await Books.findById(req.params.bookId);
-        res.json("Get specific book")
+        await Books.findById(req.params.bookId);
+        res.json({
+            message: "Get specific book"
+        })
     } catch(err){
         res.json({message: err});
     }
@@ -44,11 +48,14 @@ router.get('/:bookId', async (req, res) => {
 router.patch('/:bookId', async (req, res) => {
     try{
         const payload = req.body;
-        const updatedBook = await Books.updateOne(
+        await Books.updateOne(
             {_id: req.params.bookId},
             {...payload}
         );
-        res.json("Book had been updated")
+        res.json({
+            message: "Book had been updated",
+            updated: true
+        })
     } catch(err){
         res.json({message: err});
     }
@@ -57,8 +64,11 @@ router.patch('/:bookId', async (req, res) => {
 //DELETE SPECIFIC POST
 router.delete('/:bookId', async (req, res) => {
     try{
-        const removedBook = await Books.remove({_id: req.params.bookId})
-        res.json("Book had been deleted successfully")
+        await Books.remove({_id: req.params.bookId})
+        res.json({
+            message: "Book had been deleted successfully",
+            deleted: true
+        })
     } catch(err){
         res.json({message: err});
     }
